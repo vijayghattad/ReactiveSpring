@@ -51,7 +51,7 @@ public class FluxAndMonoErrorTest {
         Flux<String> stringFlux = Flux.just("A", "B", "C")
                 .concatWith(Flux.error(new RuntimeException("Exception Occurred")))
                 .concatWith(Flux.just("D"))
-                .onErrorMap((e) -> new CustomException(e));
+                .onErrorMap(CustomException::new);
 
         StepVerifier.create(stringFlux.log())
                 .expectSubscription()
@@ -67,7 +67,7 @@ public class FluxAndMonoErrorTest {
         Flux<String> stringFlux = Flux.just("A", "B", "C")
                 .concatWith(Flux.error(new RuntimeException("Exception Occurred")))
                 .concatWith(Flux.just("D"))
-                .onErrorMap((e) -> new CustomException(e))
+                .onErrorMap(CustomException::new)
                 .retry(2);
 
         StepVerifier.create(stringFlux.log())
@@ -86,7 +86,7 @@ public class FluxAndMonoErrorTest {
         Flux<String> stringFlux = Flux.just("A", "B", "C")
                 .concatWith(Flux.error(new RuntimeException("Exception Occurred")))
                 .concatWith(Flux.just("D"))
-                .onErrorMap((e) -> new CustomException(e))
+                .onErrorMap(CustomException::new)
                 .retryBackoff(2, Duration.ofSeconds(5));
 
         StepVerifier.create(stringFlux.log())

@@ -47,7 +47,7 @@ public class FluxAndMonoBackPressureTest {
         finiteFlux.subscribe((element) -> System.out.println("Element is : " + element)
                 , (e) -> System.err.println("Exception is : " + e)
                 , () -> System.out.println("Done")
-                , (subscription -> subscription.cancel()));
+                , (Subscription::cancel));
 
     }
 
